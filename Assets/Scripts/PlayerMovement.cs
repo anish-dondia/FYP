@@ -20,6 +20,7 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         Run();
+        Rotation();
     }
 
     void Run()
@@ -39,6 +40,10 @@ public class PlayerMovement : MonoBehaviour
             myAnimator.SetTrigger("Idle");
             myAnimator.ResetTrigger("Run");
         }
-        
+    }
+
+    void Rotation()
+    {
+        transform.Rotate(new Vector3(0,Input.GetAxis("Mouse X") * 1f, 0));
     }
 }

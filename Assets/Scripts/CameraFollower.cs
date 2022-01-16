@@ -14,5 +14,11 @@ public class CameraFollower : MonoBehaviour
         Vector3 desiredPosition = target.position + offset;
         Vector3 cleanPosition = Vector3.Lerp(transform.position, desiredPosition, cameraLockOn);
         transform.position = cleanPosition;
+        Rotate();
+    }
+
+    void Rotate()
+    {
+        Quaternion.AngleAxis(Input.GetAxis("Mouse X") * 2f, Vector3.up);
     }
 }
