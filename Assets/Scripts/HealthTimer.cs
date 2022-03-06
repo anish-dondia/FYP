@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class HealthTimer : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class HealthTimer : MonoBehaviour
     [SerializeField] float currentTimer;
     [SerializeField] float damageDrop = 5f;
     [SerializeField] float toxicAirDamage = 0.1f; //NOT WORKING GET HELP
+    [SerializeField] float toxicWaterDamage = 0.5f;
 
     float time = 0.0f;
     float period = 1f;
@@ -34,6 +36,8 @@ public class HealthTimer : MonoBehaviour
             this.currentTimer -= this.timeDropper;
             this.UpdateHealthTimer();
         }
+
+        death();
     }
 
     void OnCollisionEnter(Collision collision)
@@ -52,13 +56,31 @@ public class HealthTimer : MonoBehaviour
     {
         if(other.tag =="Toxic Air")
         {
-            if (this.currentTimer > 0)
+            if(this.currentTimer > 0)
             {
                 this.currentTimer -= this.toxicAirDamage;
                 this.UpdateHealthTimer();
             }
         }
+
+        if(other.tag == "Toxic Water")
+        {
+            if (this.currentTimer > 0)
+            {
+                this.currentTimer -= this.toxicWaterDamage;
+                this.UpdateHealthTimer();
+            }
+        }
     }
+
+    void death()
+    {
+        if(this.currentTimer <= 0)
+        {
+            SceneManager.LoadScene(0);
+        }
+    }
+
     void UpdateHealthTimer()
     {
         float percentHealth = (this.currentTimer / this.maxHealthTimer);
