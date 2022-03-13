@@ -5,7 +5,9 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     Rigidbody rb;
-    Animator myAnimator; 
+    Animator myAnimator;
+
+    Vector3 moveDirectionPush;
 
     [SerializeField] float moveSpeed = 3f;
 
@@ -14,7 +16,7 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         myAnimator = GetComponent<Animator>();
 
-        rb.freezeRotation = true;
+        rb.freezeRotation = true; //prevents charcter from rotating 
     }
 
     void Update()
@@ -44,6 +46,16 @@ public class PlayerMovement : MonoBehaviour
 
     void Rotation()
     {
-        transform.Rotate(new Vector3(0,Input.GetAxis("Mouse X") * 1f, 0));
+        transform.Rotate(new Vector3(0,Input.GetAxis("Mouse X") * 1f, 0)); //mouse follow 
+    }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider.tag == "Car")
+        {
+            moveDirectionPush = rb.transform.position - collision.transform.position; //knockback effect 
+            rb.AddForce(moveDirectionPush.normalized * 500f); //knockback effect 
+        }
+
     }
 }

@@ -8,14 +8,17 @@ public class HealthTimer : MonoBehaviour
     [SerializeField] float maxHealthTimer = 100f;
     [SerializeField] float currentTimer;
     [SerializeField] float damageDrop = 5f;
-    [SerializeField] float toxicAirDamage = 0.1f; //NOT WORKING GET HELP
+    [SerializeField] float toxicAirDamage = 0.1f; 
     [SerializeField] float toxicWaterDamage = 0.5f;
+    [SerializeField] float carDamage = 20f;
+    [SerializeField] float food = 10f;
 
     float time = 0.0f;
     float period = 1f;
     float timeDropper = 1f;
 
     private HealthBar healthBar;
+
     void Awake()
     {
         this.healthBar = this.GetComponentInChildren<HealthBar>();
@@ -50,6 +53,30 @@ public class HealthTimer : MonoBehaviour
                 this.UpdateHealthTimer();
             }
         }
+
+        if(collision.collider.tag == "Car")
+        {
+            if (this.currentTimer > 0)
+            {
+                this.currentTimer -= this.carDamage;
+                this.UpdateHealthTimer();
+            }
+        }
+
+        if(collision.collider.tag == "Food")
+        {
+            if (this.currentTimer <= 150f)
+            {
+                this.currentTimer += this.food;
+                this.UpdateHealthTimer();
+
+                if(this.currentTimer > 149f)
+                {
+                    this.currentTimer = 150;
+                    this.UpdateHealthTimer();
+                }
+            }
+        }
     }
 
     void OnTriggerStay(Collider other)
@@ -77,7 +104,7 @@ public class HealthTimer : MonoBehaviour
     {
         if(this.currentTimer <= 0)
         {
-            SceneManager.LoadScene(0);
+            SceneManager.LoadScene(2);
         }
     }
 

@@ -10,4 +10,9 @@ public class GameSession : MonoBehaviour
     {
         SceneManager.LoadScene(1);
     }
+
+    public void ReturnToMenu()
+    {
+        SceneManager.LoadScene(0);
+    }
 }

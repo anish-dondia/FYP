@@ -474,7 +474,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Enter Game description to user
+  m_Text: 'Objective: Explore the map but be aware, some areas might cause damage
+    due to pollutions. '
 --- !u!222 &425348528
 CanvasRenderer:
   m_ObjectHideFlags: 0
