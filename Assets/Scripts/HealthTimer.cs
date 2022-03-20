@@ -13,18 +13,26 @@ public class HealthTimer : MonoBehaviour
     [SerializeField] float carDamage = 20f;
     [SerializeField] float food = 10f;
 
+    [SerializeField] AudioClip eat;
+
     float time = 0.0f;
     float period = 1f;
     float timeDropper = 1f;
 
     private HealthBar healthBar;
 
+    public List<GameObject> Food;
+
     void Awake()
     {
+
         this.healthBar = this.GetComponentInChildren<HealthBar>();
         this.currentTimer = this.maxHealthTimer;
 
         this.UpdateHealthTimer();
+
+        Food = new List<GameObject>();
+        Food.AddRange(GameObject.FindGameObjectsWithTag("Food"));
     }
 
  
@@ -51,6 +59,7 @@ public class HealthTimer : MonoBehaviour
             {
                 this.currentTimer -= this.damageDrop;
                 this.UpdateHealthTimer();
+                AudioSource.PlayClipAtPoint(eat, transform.position);
             }
         }
 
@@ -76,6 +85,8 @@ public class HealthTimer : MonoBehaviour
                     this.UpdateHealthTimer();
                 }
             }
+            AudioSource.PlayClipAtPoint(eat, transform.position);
+            Food.Remove(collision.gameObject);
         }
     }
 
@@ -102,7 +113,7 @@ public class HealthTimer : MonoBehaviour
 
     void death()
     {
-        if(this.currentTimer <= 0)
+        if(this.currentTimer <= 0 || Food.Count <= 0)
         {
             SceneManager.LoadScene(2);
         }

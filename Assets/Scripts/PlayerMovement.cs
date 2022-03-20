@@ -54,8 +54,21 @@ public class PlayerMovement : MonoBehaviour
         if (collision.collider.tag == "Car")
         {
             moveDirectionPush = rb.transform.position - collision.transform.position; //knockback effect 
-            rb.AddForce(moveDirectionPush.normalized * 500f); //knockback effect 
+            rb.AddForce(moveDirectionPush.normalized * 750f); //knockback effect 
         }
+    }
 
+    void OnCollisionStay(Collision collision)
+    {
+        if (collision.collider.tag == "Wall")
+        {
+            rb.constraints = RigidbodyConstraints.FreezePositionY;
+            rb.freezeRotation = true;
+        }
+        else
+        {
+            rb.constraints = RigidbodyConstraints.None;
+            rb.freezeRotation = true;
+        }
     }
 }
